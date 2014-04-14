@@ -48,6 +48,9 @@
     [super stopObserving];
     
     NSString* path = [NSString stringWithFormat:@"/Users/%@/.rox/config.yml",NSUserName()];
+    if ([[[NSProcessInfo processInfo] environment] objectForKey:@"ROX_CONFIG"] != nil){
+        path = [[[NSProcessInfo processInfo] environment] objectForKey:@"ROX_CONFIG"];
+    }
     NSInputStream *stream = [[NSInputStream alloc] initWithFileAtPath:path];
     NSError* err = nil;
     NSMutableArray* yaml = [YAMLSerialization objectsWithYAMLStream:stream options:kYAMLReadOptionStringScalars error:&err];
